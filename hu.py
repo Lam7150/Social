@@ -135,7 +135,7 @@ my_msg = tkinter.StringVar()  # For the messages to be sent.
 my_msg.set("Type your messages here.")
 scrollbar = tkinter.Scrollbar(messages_frame)  # To navigate through past messages.
 # Following will contain the messages.
-msg_list = tkinter.Listbox(messages_frame, height=30, width=80,bg = "IndianRed1", yscrollcommand=scrollbar.set)
+msg_list = tkinter.Listbox(messages_frame, height=30, width=80,bg = "white", yscrollcommand=scrollbar.set)
 
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 msg_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
