@@ -1,0 +1,49 @@
+from nltk.tokenize import RegexpTokenizer
+import json
+
+'''Declaring tokenizer'''
+tokenizer = RegexpTokenizer(r'\w+')
+stopwords = []
+stoplist = open("spacy_gensim.txt", "r")
+
+'''Declaring stoplist'''
+for word in stoplist:
+    stopwords.append(word.rstrip("\n"))
+
+'''Adding keywords attribute to the json list of jokes to simplify searching'''
+with open("reddit_jokes.json", "r") as json_file:
+    jokes = json.load(json_file)
+    jokes_cleaned = []
+    for joke in jokes:
+        joke["body"] = joke["title"] + "\n" + joke["body"]
+        if len(joke["body"]) < 200:
+            joke["keywords"] = [word.lower() for word in tokenizer.tokenize(joke["body"]) if word.lower() not in stopwords]
+            jokes_cleaned.append(joke)
+    file = open("reddit_jokes_clean.json", "w")
+    json.dump(jokes_cleaned, file, sort_keys = True, indent = 4, ensure_ascii = False)
+    json_file.close()
+
+with open("stupidstuff.json", "r") as json_file:
+    jokes = json.load(json_file)
+    jokes_cleaned = []
+    for joke in jokes:
+        if len(joke["body"]) < 200:
+            joke["keywords"] = [word.lower() for word in tokenizer.tokenize(joke["body"]) if word.lower() not in stopwords]
+            jokes_cleaned.append(joke)
+    file = open("stupidstuff_clean.json", "w")
+    json.dump(jokes_cleaned, file, sort_keys = True, indent = 4, ensure_ascii = False)
+    json_file.close()
+
+with open("wocka.json", "r") as json_file:
+    jokes = json.load(json_file)
+    jokes_cleaned = []
+    for joke in jokes:
+        if len(joke["body"]) < 200:
+            joke["keywords"] = [word.lower() for word in tokenizer.tokenize(joke["body"]) if word.lower() not in stopwords]
+            jokes_cleaned.append(joke)
+
+    file = open("wocka_clean.json", "w")
+    json.dump(jokes_cleaned, file, sort_keys = True, indent = 4, ensure_ascii = False)
+    json_file.close()
+
+stoplist.close()
